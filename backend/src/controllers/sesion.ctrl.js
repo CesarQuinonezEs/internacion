@@ -7,8 +7,7 @@ ctrl.getAllSessions = async(req,res) =>{
        res.json(sessions.rows);
         
     } catch (error) {
-        console.log(error);
-        res.send('Error');
+        next(error);
     }
        
 }
@@ -19,8 +18,7 @@ ctrl.getSessionById = async (req,res) => {
         const session = await pool.query('SELECT * FROM sesion where id = $1',[id])
         res.json(session.rows);
     } catch (error) {
-        console.log(error);
-        res.send('Error');
+        next(error);
     }
 }
 
@@ -30,7 +28,7 @@ ctrl.saveSession = async(req,res) =>{
         const result = await pool.query('insert into sesion(correo, passwd) values($1, MD5($2)) RETURNING *', [correo, passwd]);
         res.json(result);
     } catch (error) {
-        res.send('Error');
+        next(error);
     }
 }
 
@@ -40,9 +38,7 @@ ctrl.deleteSessionById = async(req,res) => {
         const result = await pool.query('DELETE FROM sesion WHERE id = $1 RETURNING *',[id])
         res.json(result);
     }catch(error){
-        res.send('Error');
-        console.log(error);
-
+        next(error);
     }
 }
 
@@ -53,7 +49,7 @@ ctrl.updateSessionById = async(req,res) =>{
         const result = await pool.query('UPDATE sesion SET correo = $1, passwd = MD5($2) WHERE idrol = $3',[correo,passwd,id])
         res.json(result.rowCount);
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 module.exports = ctrl;

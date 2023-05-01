@@ -13,5 +13,10 @@ app.use(express.json());
 app.use('/api/roles',rolesRoute);
 app.use('/api/sesion',sesionRoute);
 app.use('/api/perfiles',perfilRoute);
-
+//error
+app.use((err,req,res,next)=>{
+    return res.json({
+        "menssage": err.menssage
+    })
+})
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

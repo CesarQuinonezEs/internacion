@@ -7,8 +7,7 @@ ctrl.getAllPerfiles = async(req,res) =>{
        res.json(sessions.rows);
         
     } catch (error) {
-        console.log(error);
-        res.send('Error');
+        next(error);
     }
        
 }
@@ -19,8 +18,7 @@ ctrl.getPerfilById = async (req,res) => {
         const session = await pool.query('SELECT * FROM perfil where idPerfil = $1',[id])
         res.json(session.rows);
     } catch (error) {
-        console.log(error);
-        res.send('Error');
+        next(error);
     }
 }
 
@@ -31,7 +29,7 @@ ctrl.savePerfil = async(req,res) =>{
         [nombre, aMaterno,aPaterno,sexo,rol,sesion]);
         res.json(result);
     } catch (error) {
-        res.send('Error');
+        next(error);
     }
 }
 
@@ -41,8 +39,7 @@ ctrl.deletePerfilById = async(req,res) => {
         const result = await pool.query('DELETE FROM perfil WHERE idPerfil = $1 RETURNING *',[id])
         res.json(result);
     }catch(error){
-        res.send('Error');
-        console.log(error);
+        next(error);
 
     }
 }
@@ -54,7 +51,7 @@ ctrl.updatePerfilById = async(req,res) =>{
         const result = await pool.query('UPDATE sesion SET nombre = $1, aMaterno = $2,aPaterno = $3 ,sexo = $4,rol =$5,sesion = $6 WHERE idPerfil = $7',[nombre, aMaterno,aPaterno,sexo,rol,sesion,id])
         res.json(result.rowCount);
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 module.exports = ctrl;

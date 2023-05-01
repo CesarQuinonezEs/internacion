@@ -7,8 +7,7 @@ ctrl.getAllRoles = async(req,res) =>{
        res.json(roles.rows);
         
     } catch (error) {
-        console.log(error);
-        res.send('Error');
+        next(error);
     }
        
 }
@@ -19,8 +18,7 @@ ctrl.getRolById = async (req,res) => {
         const rol = await pool.query('SELECT * FROM roles where idrol = $1',[id])
         res.json(rol.rows);
     } catch (error) {
-        console.log(error);
-        res.send('Error');
+        next(error);
     }
 }
 
@@ -30,7 +28,7 @@ ctrl.saveRol = async(req,res) =>{
         const result = await pool.query('insert into roles(nombre, opc) values($1, $2) RETURNING *', [nombre, opc]);
         res.json(result);
     } catch (error) {
-        res.send('Error');
+        next(error);
     }
 }
 
@@ -40,8 +38,7 @@ ctrl.deleteRolById = async(req,res) => {
         const result = await pool.query('DELETE FROM roles WHERE idrol = $1 RETURNING *',[id])
         res.json(result);
     }catch(error){
-        res.send('Error');
-        console.log(error);
+        next(error);
 
     }
 }
@@ -53,7 +50,7 @@ ctrl.updateRolById = async(req,res) =>{
         const result = await pool.query('UPDATE roles SET nombre = $1, opc = $2 WHERE idrol = $3',[nombre,opc,id])
         res.json(result.rowCount);
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 module.exports = ctrl;
