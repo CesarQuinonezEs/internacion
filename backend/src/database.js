@@ -5,7 +5,8 @@ const pool = new Pool({
     password: '3ueyM0SjjGHQBtvj4kaVMnhf13B3VlOy',
     host: 'dpg-ch72qbak728iqr2b4gb0-a.oregon-postgres.render.com',
     port: 5432,
-    database: 'interna'
+    database: 'interna',
+    ssl: true
 })
 
 module.exports = pool;
