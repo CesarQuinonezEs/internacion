@@ -1,10 +1,12 @@
 const {Router} = require('express');
 const router = Router();
 const {getAllPerfiles,getPerfilById,savePerfil,deletePerfilById,updatePerfilById} = require('../controllers/perfil.ctrl');
-router.get('/',getAllPerfiles)
-router.post('/',savePerfil)
+const {verifyToken,isAdmin,isSuperAdmin} = require('../middlewares/authJwt');
+
+router.get('/',verifyToken,getAllPerfiles)
+router.post('/',[verifyToken,isAdmin],savePerfil)
 //id
-router.get('/:id',getPerfilById)
-router.put('/:id',updatePerfilById)
-router.delete('/:id',deletePerfilById)
+router.get('/:id',verifyToken,getPerfilById)
+router.put('/:id',[verifyToken],updatePerfilById)
+router.delete('/:id',[verifyToken,isSuperAdmin],deletePerfilById)
 module.exports = router;

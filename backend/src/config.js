@@ -1,6 +1,5 @@
 const{config} = require('dotenv')
-config()
-
+config();
 module.exports = {
     db:{
         user: process.env.DB_USER,
@@ -8,5 +7,8 @@ module.exports = {
         host:  process.env.DB_HOST,
         port:  process.env.DB_PORT,
         name:  process.env.DB_NAME,
+    },
+    tokenKey:{
+        token: process.env.TOKEN_SECRET
     }
 }

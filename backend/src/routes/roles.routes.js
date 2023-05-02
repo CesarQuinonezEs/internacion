@@ -1,9 +1,10 @@
 const {Router} = require('express');
 const router = Router();
 const {getAllRoles, getRolById, saveRol, deleteRolById,updateRolById} = require('../controllers/rolesCtrl');
-router.get('/',getAllRoles)
-router.post('/', saveRol)
-router.get('/:id',getRolById)
-router.delete('/:id',deleteRolById)
-router.put('/:id',updateRolById)
+const {isSuperAdmin} = require('../middlewares/authJwt');
+router.get('/',isSuperAdmin,getAllRoles)
+router.post('/', isSuperAdmin,saveRol)
+router.get('/:id',isSuperAdmin,getRolById)
+router.delete('/:id',isSuperAdmin,deleteRolById)
+router.put('/:id',isSuperAdmin,updateRolById)
 module.exports = router;
